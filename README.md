@@ -333,9 +333,6 @@ Next, ensure password-less SSH access to each machine from the primary host, and
 Here is an example hostfile:
 
 ```
-192.168.0.1:2
-malvolio.local:1
-```
 
 The above will distribute the computation across 2 processes on the first host and 1 process on the second host. Each process will use roughly an equal amount of RAM. Try to keep these numbers small, as inter-process (intra-host) communication is expensive.
 
@@ -344,6 +341,14 @@ Finally, you're ready to run a computation using `mpirun`:
 ```bash
 mpirun -hostfile hostfile -n 3 ./main -m ./models/7B/ggml-model-q4_0.gguf -n 128
 ```
+### Vulkan Build
+
+**Vulkan** is a new library aimed at replacing **OpenGL**. Starting from version `b1996`, `llama.cpp` now supports **Vulkan** as a backend. It can be faster (almost 2x on NVIDIA GeForce RTX™ 3060 Laptop GPU) than **CUDA** on a consumer-grade NVIDIA graphics card.
+
+To build with **Vulkan**:
+
+- Ensure that your operating system and graphics card support **Vulkan**.
+- Build `llama.cpp` with the following arguments: `LLAMA_VULKAN=1`.
 
 ### BLAS Build
 
